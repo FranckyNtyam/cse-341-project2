@@ -1,0 +1,27 @@
+//LOCALHOST
+### Get all the employees
+
+GET http://localhost:8080/employees
+
+### Create an employee
+
+POST http://localhost:8080/employees
+Content-Type: application/json
+
+  {
+    "full_name": "Ludovic Adjomo",
+    "department": "Engineering",
+    "position": "Software Engineer",
+    "hire_date": "2021-01-15",
+    "salary": 120000,
+    "manager": "Nathanbirch",
+    "projects": [
+      "Project 1",
+      "Project 2"
+    ],
+    "skills": [
+      "JavaScript",
+      "Python",
+      "SQL"
+    ]
+  }
