@@ -1,5 +1,5 @@
-const express = require('express');
-const app = express();
+const express = require('express')
+const app = express()
 const mongodb = require('./models/database')
 const bodyParser = require('body-parser')
 

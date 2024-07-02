@@ -9,11 +9,11 @@ POST http://localhost:8080/employees
 Content-Type: application/json
 
   {
-    "full_name": "Ludovic Adjomo",
+    "full_name": "",
     "department": "Engineering",
     "position": "Software Engineer",
     "hire_date": "2021-01-15",
-    "salary": 120000,
+    "salary": -120000,
     "manager": "Nathanbirch",
     "projects": [
       "Project 1",
@@ -25,3 +25,30 @@ Content-Type: application/json
       "SQL"
     ]
   }
+
+### Update an employee
+
+PUT http://localhost:8080/employees/668095886120a8ba28dc65df
+Content-Type: application/json
+
+  {
+    "full_name": "FRANCKY",
+    "department": "Engineering",
+    "position": "Software Engineer",
+    "hire_date": "2021-01-15",
+    "salary": 280000,
+    "manager": "Nathanbirch",
+    "projects": [
+      "Project 1",
+      "Project 2"
+    ],
+    "skills": [
+      "JavaScript",
+      "Python",
+      "SQL"
+    ]
+  }
+
+### Delete an employee
+
+DELETE http://localhost:8080/employees/667f90de0a490b329bad7305
