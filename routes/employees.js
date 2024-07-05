@@ -1,11 +1,12 @@
 const employeeRouter = require('express').Router();
 const employeeController = require('../controllers/employeeController')
-const {inputValidationRules, checkData} = require('../utilities/validator')
+const validation = require('../utilities/validator')
+const {isAuthenticated} = require('../utilities/authenticate')
 
-employeeRouter.get('/', employeeController.getAllEmployee)
-employeeRouter.post('/', inputValidationRules(), checkData, employeeController.CreateEmployee)
-employeeRouter.put('/:id',inputValidationRules(), checkData, employeeController.updateEmployee)
-employeeRouter.delete('/:id', employeeController.deleteEmployee)
+employeeRouter.get('/',isAuthenticated, employeeController.getAllEmployee)
+employeeRouter.post('/',isAuthenticated, validation.employeeValidationRules(), validation.employeeCheckData, employeeController.CreateEmployee)
+employeeRouter.put('/:id',isAuthenticated, validation.employeeValidationRules(), validation.employeeCheckData, employeeController.updateEmployee)
+employeeRouter.delete('/:id',isAuthenticated, employeeController.deleteEmployee)
 
 
 module.exports = employeeRouter;
