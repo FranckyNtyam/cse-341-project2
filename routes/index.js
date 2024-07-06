@@ -4,7 +4,7 @@ const router = require('express').Router();
 
 router.use('/', require('./swagger'))
 router.get('/', (req, res) =>{
-    res.send('Hello Francky Ludovic, type "localhost:8080/login" to log');
+    res.send('Hello Francky Ludovic, type "/login" after the url to log');
 })
 
 
