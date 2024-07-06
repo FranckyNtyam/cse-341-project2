@@ -39,9 +39,9 @@ passport.use(new githubStrategy({
     callbackURL:process.env.CALLBACK_URL
 },
 function(accessToken, refreshToken, profile, done){
-    //User.findOrCreate({githubId.profile.Id}.function(err,){
+    User.findOrCreate({githubId: profile.Id}, function(err,){
         return done(null, profile)
-    // })
+     })
    
 }
 ))
