@@ -39,9 +39,9 @@ passport.use(new githubStrategy({
     callbackURL:process.env.CALLBACK_URL
 },
 function(accessToken, refreshToken, profile, done){
-    User.findOrCreate({githubId: profile.Id}, function(err,){
+    User.findOrCreate({githubId:profile.Id}, function(err,){
         return done(null, profile)
-     })
+    })
    
 }
 ))
@@ -58,7 +58,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/github/callback', passport.authenticate('github', {
-    failureRedirect: "/api-doc", session: true
+    failureRedirect: "/api-docs", session: false
 }),
 (req, res) => {
     req.session.user = req.user
