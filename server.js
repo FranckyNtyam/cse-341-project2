@@ -58,7 +58,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/github/callback', passport.authenticate('github', {
-    failureRedirect: "/api-doc", session: false
+    failureRedirect: "/api-doc", session: true
 }),
 (req, res) => {
     req.session.user = req.user
