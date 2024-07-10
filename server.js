@@ -5,23 +5,14 @@ const dotenv = require('dotenv')
 const bodyParser = require('body-parser')
 const passport = require('passport')
 const session = require('express-session')
-const githubStrategy = require('passport-github2').Strategy
+const GithubStrategy = require('passport-github2').Strategy
 const cors = require('cors')
 
 const port = process.env.PORT || 8080
 
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
-// This is the basic express session initialization.
-app.use(session({
-    secret:"secret",
-    resave:false,
-    saveUninitialized:true,
-}))
-// Init passport on every routes call.
-app.use(passport.initialize())
-//Allow passport to use express-session
-app.use(passport.session())
+
 
 app.use((req,res,next) =>{
     res.setHeader('Access-Control-Allow-Origin', '*')
@@ -33,19 +24,29 @@ app.use((req,res,next) =>{
 app.use(cors({methods:['GET', 'POST', 'PUT', 'DELETE']}))
 app.use(cors({origin:'*'}))
 app.use('/', require('./routes/index') )
-passport.use(new githubStrategy({
+passport.use(new GithubStrategy({
     clientID:process.env.GITHUB_CLIENT_ID,
     clientSecret:process.env.GITHUB_CLIENT_SECRET,
     callbackURL:process.env.CALLBACK_URL
 },
 function(accessToken, refreshToken, profile, done){
-    User.findOrCreate({githubId:profile.Id}, function(err,){
-        return done(null, profile)
-    })
    
-}
+        return done(null, profile)
+    }
+   
+
 ))
 
+// This is the basic express session initialization.
+app.use(session({
+    secret:"secret",
+    // resave:false,
+    // saveUninitialized:true,
+}))
+// Init passport on every routes call.
+app.use(passport.initialize())
+//Allow passport to use express-session
+app.use(passport.session())
 passport.serializeUser((user, done) => {
     done(null, user)
 })
@@ -57,7 +58,7 @@ app.get('/', (req, res) => {
     res.send(req.session.user !== undefined ? `logged in as ${req.session.user.displayName}`: "logged Out")
 })
 
-app.get('/github/callback', passport.authenticate('github', {
+app.get('/auth/github/callback', passport.authenticate('github', {
     failureRedirect: "/api-docs", session: false
 }),
 (req, res) => {
