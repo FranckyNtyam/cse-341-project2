@@ -40,9 +40,9 @@ passport.use(new GithubStrategy({
 },
 function(accessToken, refreshToken, profile, done){
    
-    User.findOrCreate({githubId:profile.Id}, function(err,){
+    // User.findOrCreate({githubId:profile.Id}, function(err,){
         return done(null, profile)
-    })
+    // })
     }
    
 
