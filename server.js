@@ -12,7 +12,16 @@ const port = process.env.PORT || 8080
 
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
-
+// This is the basic express session initialization.
+app.use(session({
+    secret:"secret",
+    resave:false,
+    saveUninitialized:true,
+}))
+// Init passport on every routes call.
+app.use(passport.initialize())
+//Allow passport to use express-session
+app.use(passport.session())
 
 app.use((req,res,next) =>{
     res.setHeader('Access-Control-Allow-Origin', '*')
@@ -31,22 +40,15 @@ passport.use(new GithubStrategy({
 },
 function(accessToken, refreshToken, profile, done){
    
+    User.findOrCreate({githubId:profile.Id}, function(err,){
         return done(null, profile)
+    })
     }
    
 
 ))
 
-// This is the basic express session initialization.
-app.use(session({
-    secret:"secret",
-    // resave:false,
-    // saveUninitialized:true,
-}))
-// Init passport on every routes call.
-app.use(passport.initialize())
-//Allow passport to use express-session
-app.use(passport.session())
+
 passport.serializeUser((user, done) => {
     done(null, user)
 })
